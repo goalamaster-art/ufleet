@@ -10,9 +10,71 @@ function getUtmParams() {
     utmSource: params.get("utm_source") || "",
     utmMedium: params.get("utm_medium") || "",
     utmCampaign: params.get("utm_campaign") || "",
+    utmTerm: params.get("utm_term") || "",
     utmContent: params.get("utm_content") || "",
     landingPage: window.location.pathname,
   };
+}
+
+// ---------------------------------------------------------------
+// UTM 소재별 동적 헤드카피 — admin/utm-guide.html 규칙과 동일한 매칭표.
+// utm_content 값에 키워드가 들어있으면 히어로 헤드라인을 자동 교체한다.
+// 우선순위: 배열 순서대로 첫 매칭 규칙이 적용된다 (구체적 업종 규칙이
+// negative/video 같은 형식 플래그보다 먼저 와야 함).
+// ---------------------------------------------------------------
+const HEADLINE_RULES = [
+  { test: /pos.*zero/i, headline: "포스기 0원으로 지금 바로 시작" },
+  { test: /internet|인터넷/i, headline: "인터넷 요금 월 최대 3만원 절감" },
+  { test: /beauty|뷰티|nail/i, headline: "뷰티샵 카드단말기 월 0원" },
+  { test: /restaurant|요식/i, headline: "식당 포스기 0원으로 시작" },
+  { test: /startup|창업/i, headline: "창업 준비 중이라면 지금이 기회" },
+  { test: /academy|학원/i, headline: "학원 카드단말기 월 0원" },
+  { test: /negative|부정/i, headline: "아직도 비싸게 내고 계신가요?" },
+  { test: /video|영상/i, headline: "영상에서 보셨죠? 포스기 0원 진짜입니다" },
+];
+
+function applyDynamicHeadline() {
+  const utmContent = new URLSearchParams(window.location.search).get("utm_content");
+  if (!utmContent) return;
+  const rule = HEADLINE_RULES.find((r) => r.test.test(utmContent));
+  if (!rule) return;
+  const h1 = document.querySelector(".hero h1");
+  if (h1) h1.textContent = rule.headline;
+}
+
+// ---------------------------------------------------------------
+// 메타 픽셀 이벤트 — admin/utm-guide.html의 이벤트 설계와 동일.
+// fbq는 각 HTML의 <head> 베이스 코드(YOUR_PIXEL_ID 교체 후)가 있어야 동작한다.
+// ---------------------------------------------------------------
+function trackFbq(event, params) {
+  if (typeof window.fbq !== "function") return;
+  window.fbq("track", event, params || {});
+}
+
+function initPixelEvents() {
+  const utm = getUtmParams();
+  const contentName = document.title;
+
+  // ViewContent — 랜딩 진입 시
+  trackFbq("ViewContent", {
+    content_name: contentName,
+    utm_source: utm.utmSource,
+    utm_content: utm.utmContent,
+  });
+
+  // Contact — 전화 상담 버튼 클릭 시
+  document.querySelectorAll('a[href^="tel:"]').forEach((el) => {
+    el.addEventListener("click", () => {
+      trackFbq("Contact", { utm_content: utm.utmContent });
+    });
+  });
+
+  // InitiateCheckout — 메인 CTA(히어로 1차 버튼) 클릭 시
+  document.querySelectorAll("[data-cta='primary']").forEach((el) => {
+    el.addEventListener("click", () => {
+      trackFbq("InitiateCheckout", { utm_content: utm.utmContent });
+    });
+  });
 }
 
 function initLeadForm() {
@@ -70,6 +132,12 @@ function initLeadForm() {
         // 백엔드 연결 전: 콘솔에 기록만 하고 성공 처리 (엔드포인트 연결 시 위 분기가 실행됨)
         console.info("[유플릿 리드 - 로컬 임시 처리]", payload);
       }
+      trackFbq("Lead", {
+        content_name: document.title,
+        store_status: payload.industry,
+        utm_campaign: payload.utmCampaign,
+        utm_content: payload.utmContent,
+      });
       fieldsWrap.hidden = true;
       successWrap.hidden = false;
     } catch (err) {
@@ -82,4 +150,8 @@ function initLeadForm() {
   });
 }
 
-document.addEventListener("DOMContentLoaded", initLeadForm);
+document.addEventListener("DOMContentLoaded", () => {
+  applyDynamicHeadline();
+  initPixelEvents();
+  initLeadForm();
+});

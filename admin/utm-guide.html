@@ -1,0 +1,135 @@
+<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>광고 UTM 랜딩 가이드 | 유플릿 (내부용)</title>
+<meta name="robots" content="noindex, nofollow" />
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.css" rel="stylesheet" />
+<link href="https://fonts.googleapis.com/css2?family=Outfit:wght@500;700;800&family=IBM+Plex+Mono:wght@500;600;700&display=swap" rel="stylesheet" />
+<link rel="stylesheet" href="../styles.css" />
+<style>
+  .guide-wrap { max-width: 980px; margin: 0 auto; padding: 48px 24px 100px; }
+  .guide-card { background:#fff; border:1px solid var(--line); border-radius: var(--radius-lg); padding:24px; margin-bottom:20px; }
+  .guide-table { width:100%; border-collapse:collapse; font-size:13.5px; }
+  .guide-table th, .guide-table td { padding:10px 12px; border-bottom:1px solid var(--line); text-align:left; vertical-align:top; }
+  .guide-table thead th { font-family:var(--font-mono); font-size:11px; text-transform:uppercase; color:var(--sub); background:var(--paper-2); }
+  code.k { font-family:var(--font-mono); background:var(--paper-2); padding:2px 6px; border-radius:6px; font-size:12.5px; }
+  .url-row { display:flex; align-items:center; gap:10px; background:var(--paper-2); border:1px solid var(--line); border-radius:8px; padding:10px 12px; margin-top:8px; }
+  .url-row code { flex:1; font-family:var(--font-mono); font-size:12px; overflow-x:auto; white-space:nowrap; }
+  .copy-btn { flex-shrink:0; background:var(--ink); color:#fff; border:none; border-radius:6px; padding:6px 12px; font-size:12px; font-weight:700; cursor:pointer; }
+  .copy-btn:hover { background: var(--accent-700); }
+  .seg-title { font-weight:700; margin-top:18px; }
+  .seg-headline { color: var(--accent-700); font-size: 13px; margin-top:2px; }
+</style>
+</head>
+<body>
+
+<header class="site-header">
+  <div class="wrap">
+    <a href="../index.html" class="logo">유플릿<span class="dot">.</span></a>
+    <span class="eyebrow">내부용 · noindex</span>
+  </div>
+</header>
+
+<main class="guide-wrap">
+  <h1 style="font-size:28px">광고 소재별 UTM 랜딩 가이드</h1>
+  <p style="margin-top:10px;color:var(--sub);max-width:70ch">
+    아이샵케어 핵심 전략 적용 — 광고 소재마다 다른 랜딩 URL을 사용해 어떤 소재가 전환을 냈는지 정확히 추적합니다.
+    <code class="k">utm_content</code> 값에 키워드가 포함되면 히어로 헤드라인이 자동으로 바뀝니다 (script.js의
+    <code class="k">HEADLINE_RULES</code> 참고).
+  </p>
+
+  <div class="guide-card">
+    <h2 style="font-size:18px">명명 규칙</h2>
+    <p style="margin-top:8px;color:var(--sub)">형식: <code class="k">[업종/소재타입]_[메시지타입]_[담당자]_[날짜]_[형식]</code></p>
+    <p style="margin-top:6px;color:var(--sub)">예: <code class="k">pos_zero_kim_260701_video</code>, <code class="k">beauty_zero_lee_260715_image</code></p>
+  </div>
+
+  <div class="guide-card">
+    <h2 style="font-size:18px">헤드카피 자동 매칭표</h2>
+    <div style="overflow-x:auto;margin-top:10px">
+      <table class="guide-table">
+        <thead><tr><th>키워드</th><th>매칭 패턴</th><th>자동 교체되는 헤드라인</th></tr></thead>
+        <tbody>
+          <tr><td>pos, zero</td><td><code class="k">pos.*zero</code></td><td>포스기 0원으로 지금 바로 시작</td></tr>
+          <tr><td>internet, 인터넷</td><td><code class="k">internet|인터넷</code></td><td>인터넷 요금 월 최대 3만원 절감</td></tr>
+          <tr><td>beauty, 뷰티, nail</td><td><code class="k">beauty|뷰티|nail</code></td><td>뷰티샵 카드단말기 월 0원</td></tr>
+          <tr><td>restaurant, 요식</td><td><code class="k">restaurant|요식</code></td><td>식당 포스기 0원으로 시작</td></tr>
+          <tr><td>startup, 창업</td><td><code class="k">startup|창업</code></td><td>창업 준비 중이라면 지금이 기회</td></tr>
+          <tr><td>academy, 학원</td><td><code class="k">academy|학원</code></td><td>학원 카드단말기 월 0원</td></tr>
+          <tr><td>negative, 부정</td><td><code class="k">negative|부정</code></td><td>아직도 비싸게 내고 계신가요?</td></tr>
+          <tr><td>video, 영상</td><td><code class="k">video|영상</code></td><td>영상에서 보셨죠? 포스기 0원 진짜입니다</td></tr>
+        </tbody>
+      </table>
+    </div>
+    <p style="margin-top:10px;font-size:12.5px;color:var(--sub)">매칭은 위 순서대로 검사되어 첫 번째로 맞는 규칙이 적용됩니다 — 업종 규칙이 negative/video 같은 형식 플래그보다 먼저 옵니다.</p>
+  </div>
+
+  <div class="guide-card">
+    <h2 style="font-size:18px">광고 소재별 랜딩 URL 예시</h2>
+    <p style="margin-top:6px;color:var(--sub);font-size:13px">아래 <code class="k">ufleet.co.kr</code>는 실제 도메인 확정 후 교체하세요. 지금은 예시입니다.</p>
+
+    <div class="seg-title">포스기 0원 영상 광고</div>
+    <div class="seg-headline">→ 포스기 0원으로 지금 바로 시작</div>
+    <div class="url-row"><code id="u1">https://ufleet.co.kr/event/pos.html?utm_source=meta&utm_medium=all&utm_campaign=conversion_pos_zero&utm_term=pos_a&utm_content=pos_zero_kim_260701_video</code><button class="copy-btn" onclick="copyUrl('u1')">복사</button></div>
+
+    <div class="seg-title">뷰티샵 전용 영상 광고</div>
+    <div class="seg-headline">→ 뷰티샵 카드단말기 월 0원</div>
+    <div class="url-row"><code id="u2">https://ufleet.co.kr/event/beauty.html?utm_source=meta&utm_medium=all&utm_campaign=conversion_beauty_zero&utm_term=beauty_a&utm_content=beauty_zero_kim_260701_video</code><button class="copy-btn" onclick="copyUrl('u2')">복사</button></div>
+
+    <div class="seg-title">요식업 포스기 영상 광고</div>
+    <div class="seg-headline">→ 식당 포스기 0원으로 시작</div>
+    <div class="url-row"><code id="u3">https://ufleet.co.kr/event/restaurant.html?utm_source=meta&utm_medium=all&utm_campaign=conversion_restaurant_pos&utm_term=restaurant_a&utm_content=restaurant_pos_kim_260701_video</code><button class="copy-btn" onclick="copyUrl('u3')">복사</button></div>
+
+    <div class="seg-title">예비창업자 영상 광고</div>
+    <div class="seg-headline">→ 창업 준비 중이라면 지금이 기회</div>
+    <div class="url-row"><code id="u4">https://ufleet.co.kr/event/startup.html?utm_source=meta&utm_medium=all&utm_campaign=conversion_startup_special&utm_term=startup_a&utm_content=startup_zero_kim_260701_video</code><button class="copy-btn" onclick="copyUrl('u4')">복사</button></div>
+
+    <div class="seg-title">학원 전용 영상 광고</div>
+    <div class="seg-headline">→ 학원 카드단말기 월 0원</div>
+    <div class="url-row"><code id="u5">https://ufleet.co.kr/event/academy.html?utm_source=meta&utm_medium=all&utm_campaign=conversion_academy_zero&utm_term=academy_a&utm_content=academy_zero_kim_260701_video</code><button class="copy-btn" onclick="copyUrl('u5')">복사</button></div>
+
+    <div class="seg-title">결합상품 영상 광고</div>
+    <div class="seg-headline">→ 인터넷+포스기 한 번에 해결 (매칭 규칙 없음, 기본 헤드라인 유지)</div>
+    <div class="url-row"><code id="u6">https://ufleet.co.kr/event/bundle.html?utm_source=meta&utm_medium=all&utm_campaign=conversion_bundle_special&utm_term=bundle_a&utm_content=bundle_combo_kim_260701_video</code><button class="copy-btn" onclick="copyUrl('u6')">복사</button></div>
+
+    <div class="seg-title">부정 소재 (비싸다 공감) 영상 광고</div>
+    <div class="seg-headline">→ 아직도 비싸게 내고 계신가요?</div>
+    <div class="url-row"><code id="u7">https://ufleet.co.kr/event/pos.html?utm_source=meta&utm_medium=all&utm_campaign=conversion_pos_negative&utm_term=pos_neg_a&utm_content=pos_negative_kim_260701_video</code><button class="copy-btn" onclick="copyUrl('u7')">복사</button></div>
+  </div>
+
+  <div class="guide-card">
+    <h2 style="font-size:18px">메타 픽셀 이벤트 설계</h2>
+    <div style="overflow-x:auto;margin-top:10px">
+      <table class="guide-table">
+        <thead><tr><th>이벤트</th><th>발화 시점</th><th>포함 데이터</th><th>활용</th></tr></thead>
+        <tbody>
+          <tr><td><code class="k">ViewContent</code></td><td>랜딩 페이지 진입 시</td><td>content_name, utm_source, utm_content</td><td>도달 측정, 리타겟팅</td></tr>
+          <tr><td><code class="k">Lead</code></td><td>폼 제출 완료 시</td><td>content_name, store_status, utm_campaign, utm_content</td><td>전환 캠페인 최적화 핵심</td></tr>
+          <tr><td><code class="k">Contact</code></td><td>전화 상담 버튼 클릭 시</td><td>utm_content</td><td>전화 전환 추적</td></tr>
+          <tr><td><code class="k">InitiateCheckout</code></td><td>메인 CTA 클릭 시</td><td>utm_content</td><td>의향 측정, 유사 타겟</td></tr>
+        </tbody>
+      </table>
+    </div>
+    <p style="margin-top:12px;padding:12px 14px;background:var(--paper-2);border-radius:8px;font-size:13px;color:var(--sub)">
+      ⚠️ 픽셀 이벤트 코드는 7개 페이지에 전부 구현되어 있으나, 각 파일 <code class="k">&lt;head&gt;</code>의
+      <code class="k">YOUR_PIXEL_ID</code> 두 곳(스크립트 src / fbq init)을 메타 광고관리자에서 발급받은 실제 픽셀 ID로 교체해야 활성화됩니다.
+    </p>
+  </div>
+</main>
+
+<script>
+function copyUrl(id) {
+  const text = document.getElementById(id).textContent;
+  navigator.clipboard.writeText(text).then(() => {
+    const btn = event.target;
+    const original = btn.textContent;
+    btn.textContent = "복사됨!";
+    setTimeout(() => { btn.textContent = original; }, 1200);
+  });
+}
+</script>
+</body>
+</html>
