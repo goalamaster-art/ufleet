@@ -246,6 +246,23 @@ h2 {
   cursor: default;
 }
 
+/* ---------- top promo bar ---------- */
+.promo-bar {
+  background: linear-gradient(90deg, var(--accent-700), var(--accent));
+  color: #fff;
+  text-align: center;
+  padding: 10px 16px;
+  font-size: 13.5px;
+  font-weight: 600;
+}
+.promo-bar a {
+  text-decoration: underline;
+  text-underline-offset: 3px;
+  font-weight: 800;
+  margin-left: 6px;
+  white-space: nowrap;
+}
+
 /* ---------- header ---------- */
 .site-header {
   position: sticky;
@@ -474,6 +491,190 @@ h2 {
   font-size: 26px;
   font-weight: 800;
   color: var(--accent-700);
+}
+
+/* ---------- proof stats row ---------- */
+.proof-row {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 16px;
+}
+@media (min-width: 720px) {
+  .proof-row {
+    grid-template-columns: repeat(4, 1fr);
+  }
+}
+.proof-card {
+  background: #fff;
+  border: 1px solid var(--line);
+  border-radius: var(--radius-lg);
+  padding: 26px 20px;
+  text-align: center;
+}
+.proof-card .n {
+  font-family: var(--font-mono);
+  font-size: clamp(26px, 3vw, 34px);
+  font-weight: 800;
+  color: var(--accent-700);
+}
+.proof-card .l {
+  margin-top: 6px;
+  font-weight: 700;
+  font-size: 14px;
+}
+.proof-card .d {
+  margin-top: 2px;
+  font-size: 12px;
+  color: var(--sub);
+}
+
+/* ---------- trust logos ---------- */
+.trust-logos {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 10px;
+}
+@media (min-width: 640px) {
+  .trust-logos {
+    grid-template-columns: repeat(6, 1fr);
+  }
+}
+.trust-logo {
+  background: #fff;
+  border: 1px solid var(--line);
+  border-radius: var(--radius-md);
+  padding: 18px 10px;
+  text-align: center;
+  font-size: 12.5px;
+  font-weight: 700;
+  color: var(--ink-soft);
+}
+.trust-logo .emoji {
+  font-size: 24px;
+  display: block;
+  margin-bottom: 6px;
+}
+.category-tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin-top: 20px;
+  justify-content: center;
+}
+.category-tags span {
+  background: var(--accent-50);
+  color: var(--accent-700);
+  font-size: 13px;
+  font-weight: 700;
+  padding: 6px 14px;
+  border-radius: var(--radius-pill);
+}
+
+/* ---------- testimonial ---------- */
+.testimonial-card {
+  max-width: 640px;
+  margin: 0 auto;
+  background: #fff;
+  border: 1px solid var(--line);
+  border-radius: var(--radius-lg);
+  padding: 32px;
+  text-align: center;
+  box-shadow: var(--shadow-md);
+}
+.testimonial-card .stars {
+  color: var(--amber);
+  font-size: 18px;
+  letter-spacing: 2px;
+}
+.testimonial-card .tag {
+  display: inline-block;
+  margin-top: 12px;
+  font-size: 12.5px;
+  font-weight: 700;
+  color: var(--accent-700);
+  background: var(--accent-50);
+  padding: 4px 12px;
+  border-radius: var(--radius-pill);
+}
+.testimonial-card blockquote {
+  margin: 18px 0 0;
+  font-size: 16.5px;
+  line-height: 1.6;
+  color: var(--ink);
+}
+.testimonial-card .author {
+  margin-top: 16px;
+  font-size: 13.5px;
+  color: var(--sub);
+  font-weight: 700;
+}
+
+/* ---------- plans ---------- */
+.plan-card {
+  max-width: 480px;
+  margin: 0 auto;
+  background: #fff;
+  border: 2px solid var(--accent);
+  border-radius: var(--radius-lg);
+  padding: 32px;
+  position: relative;
+  box-shadow: var(--shadow-accent);
+}
+.plan-badge {
+  position: absolute;
+  top: -14px;
+  left: 50%;
+  transform: translateX(-50%);
+  background: var(--accent);
+  color: #fff;
+  font-size: 12.5px;
+  font-weight: 700;
+  padding: 5px 16px;
+  border-radius: var(--radius-pill);
+  white-space: nowrap;
+}
+.plan-card h3 {
+  text-align: center;
+  font-size: 20px;
+  margin-top: 6px;
+}
+.plan-price {
+  text-align: center;
+  margin-top: 14px;
+}
+.plan-price .big {
+  font-family: var(--font-mono);
+  font-size: 40px;
+  font-weight: 800;
+  color: var(--accent-700);
+}
+.plan-price .small {
+  font-size: 13px;
+  color: var(--sub);
+  margin-top: 2px;
+}
+.plan-list {
+  margin-top: 22px;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+.plan-list li {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 14px;
+}
+.plan-list li::before {
+  content: "✓";
+  color: var(--green);
+  font-weight: 700;
+}
+.plan-note {
+  margin-top: 16px;
+  font-size: 11.5px;
+  color: var(--sub);
+  text-align: center;
 }
 
 /* ---------- bento pillars ---------- */
