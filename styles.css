@@ -44,6 +44,24 @@
 * {
   box-sizing: border-box;
 }
+
+/* Fluent 3D emoji illustrations (replaces plain unicode emoji site-wide) */
+.femoji {
+  display: inline-block;
+  width: 1.35em;
+  height: 1.35em;
+  object-fit: contain;
+  vertical-align: -0.3em;
+}
+.femoji-lg {
+  width: 40px;
+  height: 40px;
+  vertical-align: middle;
+}
+.femoji-xl {
+  width: 56px;
+  height: 56px;
+}
 html {
   scroll-behavior: smooth;
 }
