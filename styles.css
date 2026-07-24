@@ -148,6 +148,7 @@ h3 {
   font-weight: 900;
   letter-spacing: -0.01em;
   margin: 0;
+  word-break: keep-all;
 }
 h2 {
   font-size: clamp(26px, 3.4vw, 38px);
@@ -395,8 +396,9 @@ h2 {
 }
 .hero h1 {
   margin-top: 18px;
-  font-size: clamp(34px, 5.4vw, 60px);
-  line-height: 1.08;
+  font-size: clamp(30px, 4.2vw, 46px);
+  line-height: 1.32;
+  word-break: keep-all;
 }
 .hero h1 em {
   font-style: normal;
@@ -444,10 +446,12 @@ h2 {
   box-shadow: var(--shadow-lg);
   display: grid;
   place-items: center;
-  overflow: hidden;
+  overflow: visible;
 }
 .hero-visual::before {
   content: "";
+  border-radius: var(--radius-lg);
+  overflow: hidden;
   position: absolute;
   inset: 0;
   background-image: radial-gradient(var(--line) 1px, transparent 1px);
@@ -489,8 +493,9 @@ h2 {
 }
 .floating-chip {
   position: absolute;
-  left: -18px;
-  bottom: 26px;
+  left: -22px;
+  bottom: -22px;
+  z-index: 2;
   background: #fff;
   border: 1px solid var(--line);
   border-radius: var(--radius-md);
